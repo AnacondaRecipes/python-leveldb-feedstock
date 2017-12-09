@@ -1,27 +1,32 @@
-{% set version = "0.193" %}
+{% set version = "0.20" %}
 
 package:
   name: python-leveldb
-  version: {{ version }}
+  version: "0.20"
 
 source:
-  fn: leveldb-{{ version }}.tar.gz
-  url: https://pypi.python.org/packages/source/l/leveldb/leveldb-{{ version }}.tar.gz
-  md5: 2952434f2a0ce10c44f58542cc561589
+  fn: python-leveldb-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/l/leveldb/leveldb-{{ version }}.tar.gz
+  md5: d27478fe64d243bf2784efe2d0cd1224
+  patches:
+    - exclude_local_leveldb_source.patch
+    - tweak-setup.py-for-windows.patch  # [win]
 
 build:
-  skip: true  # [win]
-  number: 0
+  number: 1
   script: python setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
     - leveldb
+    - msinttypes  # [win and py<35]
     - python
     - setuptools
 
   run:
-    - leveldb
     - python
 
 test:
@@ -31,7 +36,12 @@ test:
 about:
   home: http://code.google.com/p/py-leveldb/
   license: BSD 3-Clause
+  license_family: BSD
   summary: Python bindings for leveldb database library
+  description: |
+    LevelDB is a light-weight, single-purpose library for persistence with bindings to many platforms.
+  doc_url: http://leveldb.org/
+  doc_source_url: https://github.com/Level/levelup/blob/master/README.md
 
 extra:
   recipe-maintainers:

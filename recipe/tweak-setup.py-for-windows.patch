@@ -1,0 +1,39 @@
+From d165e32148818be777a28db1b2f1e572c4857a1f Mon Sep 17 00:00:00 2001
+From: Nehal J Wani <nehaljw.kkd1@gmail.com>
+Date: Sat, 15 Jul 2017 00:58:53 -0500
+Subject: [PATCH] Tweak setup.py for Windows
+
+---
+ setup.py | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 51acd53..fac131a 100644
+--- a/setup.py
++++ b/setup.py
+@@ -37,9 +37,6 @@ elif system == 'Linux':
+         '-DOS_LINUX',
+         '-DLEVELDB_PLATFORM_POSIX',
+     ]
+-else:
+-    sys.stderr.write("Don't know how to compile leveldb for %s!\n" % system)
+-    sys.exit(1)
+ 
+ setup(
+     name = 'leveldb',
+@@ -77,8 +74,10 @@ setup(
+                 'leveldb_ext.cc',
+                 'leveldb_object.cc',
+             ],
+-            libraries = ['snappy', 'leveldb', 'stdc++'],
+-            extra_compile_args = extra_compile_args,
++            include_dirs = [
++                os.path.join(os.getenv("LIBRARY_PREFIX"), 'include')
++            ],
++            libraries = ['snappy', 'leveldb'],
+         )
+     ]
+ )
+-- 
+2.5.1.windows.1
+
