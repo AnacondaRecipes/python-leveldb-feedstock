@@ -1,19 +1,19 @@
-{% set version = "0.20" %}
+{% set version = "0.201" %}
 
 package:
   name: python-leveldb
-  version: "0.20"
+  version: "0.201"
 
 source:
   fn: python-leveldb-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/l/leveldb/leveldb-{{ version }}.tar.gz
-  md5: d27478fe64d243bf2784efe2d0cd1224
+  md5: 544d6fb09029b06c30af09f0547f43d6
   patches:
     - exclude_local_leveldb_source.patch
     - tweak-setup.py-for-windows.patch  # [win]
 
 build:
-  number: 1
+  number: 0
   script: python setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
