@@ -21,7 +21,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
-    - leveldb
+    # missing symbol for newer leveldb version (1.23)
+    - leveldb <1.23
     - msinttypes  # [win and py<35]
     - python
     - setuptools
